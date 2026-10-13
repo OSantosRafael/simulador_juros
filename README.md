@@ -2,6 +2,9 @@
 
 Simulador financeiro de juros compostos desenvolvido em **HTML5**, **CSS3** e **JavaScript puro (Vanilla JS)**, focado em alta usabilidade, precisão matemática e design responsivo.
 
+> 🌐 **Acesse o simulador online:**  
+> 👉 [https://osantosrafael.github.io/simulador_juros/](https://osantosrafael.github.io/simulador_juros/)
+
 ---
 
 ## 📌 Pesquisa e Fundamentação Matemática
@@ -34,15 +37,21 @@ O cálculo segue o modelo de aportes regulares postecipados (ao final do mês):
 
 ---
 
-## 🚀 Como Executar
+## 🚀 Como Acessar e Executar
 
-Por estar na pasta `c:\xampp\htdocs\simulador_juros`:
+### 1. Online (Qualquer dispositivo)
+Basta acessar o link publicado no GitHub Pages:  
+👉 **[https://osantosrafael.github.io/simulador_juros/](https://osantosrafael.github.io/simulador_juros/)**
+
+### 2. Localmente via XAMPP
 1. Inicie o Apache no **XAMPP Control Panel**.
 2. Abra o navegador e acesse:
    ```text
    http://localhost/simulador_juros/
    ```
-   *(Ou abra diretamente o arquivo `index.html` em qualquer navegador moderno).*
+
+### 3. Localmente sem XAMPP
+Abra diretamente o arquivo `index.html` em qualquer navegador (Chrome, Edge, Firefox, Safari).
 
 ---
 
