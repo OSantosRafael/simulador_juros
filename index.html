@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Simulador de Juros Compostos completo e interativo com cálculo mês a mês, aportes mensais e gráficos de rendimento.">
+  <title>Simulador de Juros Compostos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Cabeçalho Principal -->
+    <header class="header">
+      <div class="header-badge">Finanças Pessoais</div>
+      <h1 class="header-title">Simulador de Juros Compostos</h1>
+      <p class="header-subtitle">
+        Projete o crescimento do seu patrimônio com a força dos juros sobre juros e aportes regulares ao longo do tempo.
+      </p>
+    </header>
+
+    <!-- Descrição e Funcionamento -->
+    <section class="info-section" aria-labelledby="sobre-titulo">
+      <div class="info-card">
+        <div class="info-header">
+          <span class="icon-circle" aria-hidden="true">💡</span>
+          <div>
+            <h2 id="sobre-titulo" class="info-title">Como funciona este simulador?</h2>
+            <p class="info-desc">
+              <strong>Objetivo:</strong> O simulador demonstra o efeito exponencial dos juros compostos — o famoso conceito de <em>"juros sobre juros"</em> —, no qual os rendimentos de cada mês são incorporados ao saldo e passam a render no período seguinte junto com os novos aportes.
+            </p>
+          </div>
+        </div>
+
+        <div class="use-cases-grid">
+          <div class="use-case-item">
+            <span class="use-case-icon" aria-hidden="true">🛡️</span>
+            <div>
+              <h3>Reserva Financeira</h3>
+              <p>Simule quanto tempo leva para construir uma reserva de emergência segura (ex: 6 meses de gastos) com aportes mensais.</p>
+            </div>
+          </div>
+
+          <div class="use-case-item">
+            <span class="use-case-icon" aria-hidden="true">📈</span>
+            <div>
+              <h3>Investimentos de Longo Prazo</h3>
+              <p>Avalie projeções em Renda Fixa (Tesouro Direto, CDBs, LCIs/LCAs) e fundos, comparando taxas mensais e anuais equivalentes.</p>
+            </div>
+          </div>
+
+          <div class="use-case-item">
+            <span class="use-case-icon" aria-hidden="true">🎯</span>
+            <div>
+              <h3>Aportes Mensais Contínuos</h3>
+              <p>Veja como pequenos valores investidos mensalmente geram um efeito multiplicador substancial ao longo dos anos.</p>
+            </div>
+          </div>
+
+          <div class="use-case-item">
+            <span class="use-case-icon" aria-hidden="true">🏖️</span>
+            <div>
+              <h3>Independência Financeira</h3>
+              <p>Calcule o valor acumulado para metas futuras, como aposentadoria antecipada, viagens ou compra de imóveis.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formulário de Entrada -->
+    <main class="main-content">
+      <section class="form-section" aria-labelledby="form-titulo">
+        <h2 id="form-titulo" class="section-title">Dados da Simulação</h2>
+        <form id="simulator-form" novalidate>
+          <div class="form-grid">
+            <!-- Valor Inicial -->
+            <div class="form-group">
+              <label for="valor-inicial">
+                Valor inicial (R$)
+                <span class="tooltip" title="Quantia que você tem disponível para começar hoje.">ℹ️</span>
+              </label>
+              <div class="input-wrapper">
+                <span class="prefix">R$</span>
+                <input 
+                  type="text" 
+                  id="valor-inicial" 
+                  name="valorInicial" 
+                  placeholder="0,00" 
+                  inputmode="numeric" 
+                  autocomplete="off"
+                  required
+                >
+              </div>
+              <span class="field-error" id="error-valor-inicial"></span>
+            </div>
+
+            <!-- Investimento Mensal -->
+            <div class="form-group">
+              <label for="aporte-mensal">
+                Investimento mensal (R$)
+                <span class="tooltip" title="Valor adicional aportado ao final de cada mês.">ℹ️</span>
+              </label>
+              <div class="input-wrapper">
+                <span class="prefix">R$</span>
+                <input 
+                  type="text" 
+                  id="aporte-mensal" 
+                  name="aporteMensal" 
+                  placeholder="0,00" 
+                  inputmode="numeric" 
+                  autocomplete="off"
+                  required
+                >
+              </div>
+              <span class="field-error" id="error-aporte-mensal"></span>
+            </div>
+
+            <!-- Taxa de Juros e Tipo -->
+            <div class="form-group form-group-split">
+              <label for="taxa-juros">
+                Taxa de juros
+                <span class="tooltip" title="Rentabilidade estimada no período selecionado.">ℹ️</span>
+              </label>
+              <div class="split-input-container">
+                <div class="input-wrapper">
+                  <input 
+                    type="text" 
+                    id="taxa-juros" 
+                    name="taxaJuros" 
+                    placeholder="0,00" 
+                    inputmode="decimal" 
+                    autocomplete="off"
+                    required
+                  >
+                  <span class="suffix">%</span>
+                </div>
+                <div class="select-wrapper">
+                  <select id="tipo-taxa" name="tipoTaxa" aria-label="Periodicidade da taxa">
+                    <option value="anual" selected>ao ano</option>
+                    <option value="mensal">ao mês</option>
+                  </select>
+                </div>
+              </div>
+              <span class="field-error" id="error-taxa-juros"></span>
+            </div>
+
+            <!-- Período e Unidade -->
+            <div class="form-group form-group-split">
+              <label for="periodo">
+                Período
+                <span class="tooltip" title="Tempo total em que os recursos ficarão investidos.">ℹ️</span>
+              </label>
+              <div class="split-input-container">
+                <div class="input-wrapper">
+                  <input 
+                    type="number" 
+                    id="periodo" 
+                    name="periodo" 
+                    placeholder="Ex: 5" 
+                    min="1" 
+                    step="1"
+                    inputmode="numeric" 
+                    required
+                  >
+                </div>
+                <div class="select-wrapper">
+                  <select id="unidade-periodo" name="unidadePeriodo" aria-label="Unidade do período">
+                    <option value="anos" selected>anos</option>
+                    <option value="meses">meses</option>
+                  </select>
+                </div>
+              </div>
+              <span class="field-error" id="error-periodo"></span>
+            </div>
+          </div>
+
+          <!-- Botões de Ação -->
+          <div class="form-actions">
+            <button type="submit" id="btn-calcular" class="btn btn-primary">
+              <span class="btn-icon">⚡</span> Calcular Simulação
+            </button>
+            <button type="button" id="btn-limpar" class="btn btn-secondary">
+              <span class="btn-icon">🔄</span> Limpar
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Seção de Resultados -->
+      <section id="results-section" class="results-section hidden" aria-labelledby="resultados-titulo" aria-live="polite">
+        <h2 id="resultados-titulo" class="section-title">Resultado da Projeção</h2>
+
+        <div class="rate-summary-banner" id="rate-summary-banner">
+          <!-- Detalhe da taxa equivalente calculada -->
+        </div>
+
+        <!-- Cards de Totais -->
+        <div class="totals-grid">
+          <div class="total-card card-invested">
+            <div class="card-header">
+              <span class="card-icon">💰</span>
+              <span class="card-label">Valor Total Investido</span>
+            </div>
+            <div class="card-value" id="res-total-investido">R$ 0,00</div>
+            <div class="card-footer" id="res-sub-investido">Aporte inicial + mensais</div>
+          </div>
+
+          <div class="total-card card-interest">
+            <div class="card-header">
+              <span class="card-icon">📈</span>
+              <span class="card-label">Total em Juros</span>
+            </div>
+            <div class="card-value highlight-interest" id="res-total-juros">R$ 0,00</div>
+            <div class="card-footer" id="res-sub-juros">Rentabilidade acumulada</div>
+          </div>
+
+          <div class="total-card card-final">
+            <div class="card-header">
+              <span class="card-icon">🏆</span>
+              <span class="card-label">Valor Total Final</span>
+            </div>
+            <div class="card-value highlight-final" id="res-total-final">R$ 0,00</div>
+            <div class="card-footer" id="res-sub-final">Montante líquido bruto acumulado</div>
+          </div>
+        </div>
+
+        <!-- Barra Visual Proporcional -->
+        <div class="distribution-container">
+          <div class="distribution-header">
+            <span>Composição do Patrimônio</span>
+            <span id="distribution-percentages">Investido: 0% | Juros: 0%</span>
+          </div>
+          <div class="distribution-bar" role="progressbar" aria-label="Composição do patrimônio">
+            <div class="bar-fill bar-invested" id="bar-invested" style="width: 50%;"></div>
+            <div class="bar-fill bar-interest" id="bar-interest" style="width: 50%;"></div>
+          </div>
+          <div class="distribution-legend">
+            <span class="legend-item"><span class="legend-color legend-invested"></span> Valor Investido</span>
+            <span class="legend-item"><span class="legend-color legend-interest"></span> Juros Acumulados</span>
+          </div>
+        </div>
+
+        <!-- Tabela Mês a Mês -->
+        <div class="table-container-section">
+          <div class="table-header-bar">
+            <div>
+              <h3 class="table-title">Evolução Mês a Mês</h3>
+              <p class="table-subtitle" id="table-subtitle">Detalhamento de cada mês da projeção</p>
+            </div>
+            <div class="table-controls">
+              <button type="button" id="btn-exportar-csv" class="btn btn-small" title="Baixar planilha em formato CSV">
+                📥 Exportar CSV
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive" tabindex="0" role="region" aria-label="Tabela de evolução mês a mês">
+            <table class="evolution-table" id="evolution-table">
+              <thead>
+                <tr>
+                  <th scope="col" class="text-center">Mês</th>
+                  <th scope="col" class="text-right">Juros do mês</th>
+                  <th scope="col" class="text-right">Total investido</th>
+                  <th scope="col" class="text-right">Juros acumulados</th>
+                  <th scope="col" class="text-right">Valor acumulado</th>
+                </tr>
+              </thead>
+              <tbody id="table-body">
+                <!-- Gerado dinamicamente via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+      <p>Simulador de Juros Compostos &bull; Ferramenta educativa de planejamento financeiro pessoal.</p>
+      <p class="footer-note">Cálculos baseados no regime de capitalização composta com taxa equivalente efetiva e aportes ao final de cada período.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
